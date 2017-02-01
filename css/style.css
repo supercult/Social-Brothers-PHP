@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #F2F1EF;
+  text-align: center;
+}
+
+h1 {
+  font-family: 'Raleway', sans-serif;
+  color: #000;
+}
+
+h2 {
+  font-family: 'Raleway', sans-serif;
+  color: #000;
+}
+
+p{
+  font-family: 'Raleway', sans-serif;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}

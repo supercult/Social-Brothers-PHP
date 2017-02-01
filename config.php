@@ -1,21 +1,17 @@
 <?php
 session_start();
 
-//Include Facebook SDK
 require_once 'include/facebook.php';
 
-/*
- * Configuration and setup FB API
- */
-$appId = ''; //Facebook App ID
-$appSecret = ''; // Facebook App Secret
-$redirectURL = 'http://social-brothers-php-supenogaming450820.codeanyapp.com/'; // Callback URL
-$fbPermissions = 'email';  //Required facebook permissions
+$FacebookAppId = ''; // Facebook App ID
+$FacebookAppSecret = ''; // Facebook App Secret
+$RedirectLink = 'http://social-brothers-php-supenogaming450820.codeanyapp.com/'; // Callback URL
+$FacebookPerms = 'email';  // Required facebook permissions
 
 //Call Facebook API
 $facebook = new Facebook(array(
-  'appId'  => $appId,
-  'secret' => $appSecret
+  'appId'  => $FacebookAppId,
+  'secret' => $FacebookAppSecret
 ));
 $CurrentUser = $facebook->getUser();
 ?>

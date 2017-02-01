@@ -5,8 +5,8 @@ require_once 'db.php';
 
 if(!$CurrentUser){
 	$CurrentUser = NULL;
-	$loginURL = $facebook->getLoginUrl(array('redirect_uri'=>$redirectURL,'scope'=>$fbPermissions));
-	$output = '<a href="'.$loginURL.'"><img src="media/fb-login-btn.png"></a>'; 	
+	$LoginLink = $facebook->getLoginUrl(array('redirect_uri'=>$RedirectLink,'scope'=>$FacebookPerms));
+	$output = '<a href="'.$LoginLink.'"><img src="media/fb-login-btn.png"></a>'; 	
 }else{
 	//Get user profile data from facebook
 	$fbUserProfile = $facebook->api('/me?fields=id,first_name,last_name,email,link,gender,locale,picture');

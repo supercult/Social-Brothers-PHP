@@ -17,5 +17,5 @@ $facebook = new Facebook(array(
   'appId'  => $appId,
   'secret' => $appSecret
 ));
-$fbUser = $facebook->getUser();
+$CurrentUser = $facebook->getUser();
 ?>

@@ -25,11 +25,11 @@ class User {
 			$prevResult = $this->db->query($prevQuery);
 			if($prevResult->num_rows > 0){
 				//Update user data if already exists
-				$query = "UPDATE ".$this->userTbl." SET first_name = '".$userData['first_name']."', last_name = '".$userData['last_name']."', picture = '".$userData['picture']."' WHERE first_name = '".$userData['first_name']."' AND last_name = '".$userData['last_name']."'";
+				$query = "UPDATE ".$this->userTbl." SET first_name = '".$userData['first_name']."', last_name = '".$userData['last_name']."', picture = '".$userData['picture']."', ip_address = '".$_SESSION['ipaddress']."' WHERE first_name = '".$userData['first_name']."' AND last_name = '".$userData['last_name']."'";
 				$update = $this->db->query($query);
 			}else{
 				//Insert user data
-				$query = "INSERT INTO ".$this->userTbl." SET first_name = '".$userData['first_name']."', last_name = '".$userData['last_name']."', picture = '".$userData['picture']."'";
+				$query = "INSERT INTO ".$this->userTbl." SET first_name = '".$userData['first_name']."', last_name = '".$userData['last_name']."', picture = '".$userData['picture']."', ip_address = '".$_SESSION['ipaddress']."'";
 				$insert = $this->db->query($query);
 			}
 			

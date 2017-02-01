@@ -3,8 +3,8 @@
 require_once 'config.php';
 require_once 'db.php';
 
-if(!$fbUser){
-	$fbUser = NULL;
+if(!$CurrentUser){
+	$CurrentUser = NULL;
 	$loginURL = $facebook->getLoginUrl(array('redirect_uri'=>$redirectURL,'scope'=>$fbPermissions));
 	$output = '<a href="'.$loginURL.'"><img src="media/fb-login-btn.png"></a>'; 	
 }else{
@@ -25,11 +25,21 @@ if(!$fbUser){
 	//Put user data into session
 	$_SESSION['userData'] = $userData;
 	
+	$ip = getenv('HTTP_CLIENT_IP')?:
+		getenv('HTTP_X_FORWARDED_FOR')?:
+		getenv('HTTP_X_FORWARDED')?:
+		getenv('HTTP_FORWARDED_FOR')?:
+		getenv('HTTP_FORWARDED')?:
+		getenv('REMOTE_ADDR');
+	
+	$_SESSION['ipaddress'] = $ip;
+	
 	//Render facebook profile data
 	if(!empty($userData)){
 		$output = '<h2>Your Details:</h2>';
 		$output .= '<img src="'.$userData['picture'].'">';
         $output .= '<p><br/>Name : ' . $userData['first_name'].' '.$userData['last_name'].'</p>';
+				$output .= '<p><br/>Ip Address :'.$ip.'</p>';
         $output .= '<p><br/>Click <a href="logout.php">here</a> to logout.</p>'; 
 	}else{
 		$output = '<h3 style="color:red">Some problem occurred, please try again.</h3>';

@@ -1,30 +1,44 @@
 <?php
-//Include FB config file && User class
-require_once 'config.php';
+// Include Database file & User Class
 require_once 'db.php';
+require_once 'include/facebook.php';
+
+// Facebook App Config
+$FacebookAppId = ''; // Facebook App ID
+$FacebookAppSecret = ''; // Facebook App Secret
+$RedirectLink = 'http://social-brothers-php-supenogaming450820.codeanyapp.com/'; // Callback URL
+$FacebookPerms = 'email';  // Required facebook permissions
+
+//Call Facebook API
+$FacebookApi = new Facebook(array(
+  'appId'  => $FacebookAppId,
+  'secret' => $FacebookAppSecret
+));
+$CurrentUser = $FacebookApi->getUser();
 
 if(!$CurrentUser){
 	$CurrentUser = NULL;
-	$LoginLink = $facebook->getLoginUrl(array('redirect_uri'=>$RedirectLink,'scope'=>$FacebookPerms));
+	$LoginLink = $FacebookApi->getLoginUrl(array('redirect_uri'=>$RedirectLink,'scope'=>$FacebookPerms));
 	$output = '<a href="'.$LoginLink.'"><img src="media/fb-login-btn.png"></a>'; 	
 }else{
 	//Get user profile data from facebook
-	$fbUserProfile = $facebook->api('/me?fields=id,first_name,last_name,email,link,gender,locale,picture');
+	$FacebookUserProfile = $FacebookApi->api('/me?fields=id,first_name,last_name,email,link,gender,locale,picture');
 	
 	//Initialize User class
 	$user = new User();
 	
 	//Insert or update user data to the database
-	$fbUserData = array(
-		'first_name' 	=> $fbUserProfile['first_name'],
-		'last_name' 	=> $fbUserProfile['last_name'],
-		'picture' 		=> $fbUserProfile['picture']['data']['url'],
+	$FacebookUserData = array(
+		'first_name' 	=> $FacebookUserProfile['first_name'],
+		'last_name' 	=> $FacebookUserProfile['last_name'],
+		'picture' 		=> $FacebookUserProfile['picture']['data']['url'],
 	);
-	$userData = $user->checkUser($fbUserData);
+	$userData = $user->checkUser($FacebookUserData);
 	
 	//Put user data into session
 	$_SESSION['userData'] = $userData;
 	
+	// Get ip address from client
 	$ip = getenv('HTTP_CLIENT_IP')?:
 		getenv('HTTP_X_FORWARDED_FOR')?:
 		getenv('HTTP_X_FORWARDED')?:
@@ -32,9 +46,10 @@ if(!$CurrentUser){
 		getenv('HTTP_FORWARDED')?:
 		getenv('REMOTE_ADDR');
 	
+	// Put ip address into session
 	$_SESSION['ipaddress'] = $ip;
 	
-	//Render facebook profile data
+	// Display user data
 	if(!empty($userData)){
 		$output = '<h2>Your Details:</h2>';
 		$output .= '<img src="'.$userData['picture'].'">';
@@ -46,6 +61,7 @@ if(!$CurrentUser){
 	}
 }
 ?>
+
 <html>
 
 <head>

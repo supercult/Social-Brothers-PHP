@@ -1,13 +1,13 @@
 <?php
-//Include FB config file
+//Include index.php
 require_once 'index.php';
 
 //Unset user data from session
 unset($_SESSION['userData']);
 
-//Destroy session data
+//Destroy data from session
 $FacebookApi->destroySession();
 
-//Redirect to homepage
+//Redirect to index.php (homepage)
 header("Location:index.php");
 ?>

@@ -61,7 +61,7 @@ if(!$CurrentUser){
 		$output .= '<a href="'.$userData['link'].'" target="_blank"><div class="left-btn"><h1>Facebook Profile</h1></div></a>';
 		$output .= '<a href="logout.php"><div class="right-btn"><h1>Logout</h1></div></a>';
 	}else{
-		$output = '<h3 style="color:red">Some problem occurred, please try again.</h3>';
+		$output = '<p>Error, please try again.</p>';
 	}
 }
 ?>

@@ -69,7 +69,7 @@ if(!$CurrentUser){
 <html>
 
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta charset="utf-8">
 	<title>Jasper Facebook Login</title>
 	<link rel="icon" href="media/fb-icon.png">
 	<link rel="stylesheet" href="css/style.css">

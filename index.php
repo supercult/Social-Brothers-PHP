@@ -1,15 +1,12 @@
 <?php
-// Include Database file & User Class
 require_once 'db.php';
 require_once 'include/facebook.php';
 
-// Facebook App Config
-$FacebookAppId = ''; // Facebook App ID
-$FacebookAppSecret = ''; // Facebook App Secret
+$FacebookAppId = '1636343336672953'; // Facebook App ID
+$FacebookAppSecret = 'f4135ace4df1c5977ed39e9bf5cd1cdb'; // Facebook App Secret
 $RedirectLink = 'http://social-brothers-php-supenogaming450820.codeanyapp.com/'; // Callback URL
-$FacebookPerms = 'email';  // Required facebook permissions
+$FacebookPerms = 'email';
 
-//Call Facebook API
 $FacebookApi = new Facebook(array(
   'appId'  => $FacebookAppId,
   'secret' => $FacebookAppSecret
@@ -19,26 +16,27 @@ $CurrentUser = $FacebookApi->getUser();
 if(!$CurrentUser){
 	$CurrentUser = NULL;
 	$LoginLink = $FacebookApi->getLoginUrl(array('redirect_uri'=>$RedirectLink,'scope'=>$FacebookPerms));
-	$output = '<a href="'.$LoginLink.'"><img src="media/fb-login-btn.png"></a>'; 	
+	$output = '<a href="'.$LoginLink.'"><img src="media/fb-login-btn.png" style="margin-top:40vh;"></a>'; 	
 }else{
-	//Get user profile data from facebook
 	$FacebookUserProfile = $FacebookApi->api('/me?fields=id,first_name,last_name,email,link,gender,locale,picture');
 	
-	//Initialize User class
 	$user = new User();
 	
-	//Insert or update user data to the database
 	$FacebookUserData = array(
-		'first_name' 	=> $FacebookUserProfile['first_name'],
-		'last_name' 	=> $FacebookUserProfile['last_name'],
-		'picture' 		=> $FacebookUserProfile['picture']['data']['url'],
+		'oauth_provider'	=> 'facebook',
+		'oauth_uid' 			=> $FacebookUserProfile['id'],
+		'first_name' 			=> $FacebookUserProfile['first_name'],
+		'last_name' 			=> $FacebookUserProfile['last_name'],
+		'picture' 				=> $FacebookUserProfile['picture']['data']['url'],
+		'email' 					=> $FacebookUserProfile['email'],
+		'gender' 					=> $FacebookUserProfile['gender'],
+		'locale' 					=> $FacebookUserProfile['locale'],
+		'link' 						=> $FacebookUserProfile['link']
 	);
 	$userData = $user->checkUser($FacebookUserData);
 	
-	//Put user data into session
 	$_SESSION['userData'] = $userData;
 	
-	// Get ip address from client
 	$ip = getenv('HTTP_CLIENT_IP')?:
 		getenv('HTTP_X_FORWARDED_FOR')?:
 		getenv('HTTP_X_FORWARDED')?:
@@ -46,16 +44,21 @@ if(!$CurrentUser){
 		getenv('HTTP_FORWARDED')?:
 		getenv('REMOTE_ADDR');
 	
-	// Put ip address into session
 	$_SESSION['ipaddress'] = $ip;
 	
-	// Display user data
 	if(!empty($userData)){
-		$output = '<h2>Your Details:</h2>';
-		$output .= '<img src="'.$userData['picture'].'">';
-        $output .= '<p><br/>Name : ' . $userData['first_name'].' '.$userData['last_name'].'</p>';
-				$output .= '<p><br/>Ip Address :'.$ip.'</p>';
-        $output .= '<p><br/>Click <a href="logout.php">here</a> to logout.</p>'; 
+		$output = '<div class="vlak1"><h2>Personal Details</h2>';
+		$output .= '<p style="float: left; margin-left:9vw;"><br/>Avatar : </p><img style="margin-right:7vw;"src="'.$userData['picture'].'">';
+		$output .= '<p><br/>Name : ' . $userData['first_name'].' '.$userData['last_name'].'</p>';
+		$output .= '<p><br/>Gender : ' . $userData['gender'].'</p>';
+		$output .= '<p><br/>Email : ' . $userData['email'].'</p></div>';
+		$output .= '<div class="vlak2"><h2>Advanced Details</h2>';
+		$output .= '<p><br/>Ingelogd met : ' . $userData['oauth_provider'].'</p>';
+		$output .= '<p><br/>Facebook ID : ' . $userData['oauth_uid'].'</p>';
+		$output .= '<p><br/>Ip Address :'.$ip.'</p>';
+		$output .= '<p><br/>Location : ' . $userData['locale'].'</p></div>';
+		$output .= '<a href="'.$userData['link'].'" target="_blank"><div class="vlak3"><h1>Facebook Profile</h1></div></a>';
+		$output .= '<a href="logout.php"><div class="vlak4"><h1>Logout</h1></div></a>';
 	}else{
 		$output = '<h3 style="color:red">Some problem occurred, please try again.</h3>';
 	}
@@ -73,10 +76,10 @@ if(!$CurrentUser){
 </head>
 
 <body>
-	<h1>Jasper Facebook Login</h1>
 	<div>
 		<?php echo $output; ?>
 	</div>
+	<div class="background"></div>
 </body>
 
 </html>

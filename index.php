@@ -3,8 +3,8 @@
 require_once 'db.php';
 require_once 'include/facebook.php';
 
-$FacebookAppId = ''; // Facebook App ID
-$FacebookAppSecret = ''; // Facebook App Secret
+$FacebookAppId = '1636343336672953'; // Facebook App ID
+$FacebookAppSecret = 'f4135ace4df1c5977ed39e9bf5cd1cdb'; // Facebook App Secret
 $RedirectLink = 'http://social-brothers-php-supenogaming450820.codeanyapp.com/'; // Redirect Link
 $FacebookPerms = 'email';
 

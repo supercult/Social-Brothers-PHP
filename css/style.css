@@ -31,7 +31,7 @@ p {
   font-size: 2.375vh;
 }
 
-.vlak1 {
+.left-details {
   display: inline-block;
   height: 40vh;
   width: 25vw;
@@ -42,7 +42,7 @@ p {
   float: left;
 }
 
-.vlak2 {
+.right-details {
   display: inline-block;
   height: 40vh;
   width: 25vw;
@@ -53,7 +53,7 @@ p {
   float: right;
 }
 
-.vlak3 {
+.left-btn {
   display: inline-block;
   height: 10vh;
   width: 25vw;
@@ -64,7 +64,7 @@ p {
   float: left;
 }
 
-.vlak3 h1 {
+.left-btn h1 {
   font-family: 'Raleway', sans-serif;
   color: #fff;
   font-size: 3vh;
@@ -72,7 +72,7 @@ p {
   margin: 0;
 }
 
-.vlak4 {
+.right-btn {
   display: inline-block;
   height: 10vh;
   width: 25vw;
@@ -83,7 +83,7 @@ p {
   float: right;
 }
 
-.vlak4 h1 {
+.right-btn h1 {
   font-family: 'Raleway', sans-serif;
   color: #fff;
   font-size: 3vh;
